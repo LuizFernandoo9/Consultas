@@ -1,0 +1,50 @@
+package com.apis.consultasApi.model;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity(name = "Consults")
+public class Consults {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
+
+    @ManyToOne()
+    @JoinColumn(name = "patientsId", nullable = false)
+    private PatientsModel patientsModel;
+
+    @ManyToOne()
+    @JoinColumn(name = "examsId", nullable = false)
+    private ExamsModel examsModel;
+
+    @ManyToOne()
+    @JoinColumn(name = "typeExamsId", nullable = false)
+    private TypeExamsModel typeExamsModel;
+
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID protocol;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updateAt;
+}
