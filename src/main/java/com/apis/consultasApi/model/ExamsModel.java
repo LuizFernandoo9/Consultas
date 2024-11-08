@@ -28,9 +28,6 @@ public class ExamsModel {
 
     private String nameExam;
 
-    @Column(name = "typeExamId")
-    private UUID idTypeExam;
-
     @ManyToOne()
     @JoinColumn(name = "typeExamId", nullable = false)
     private TypeExamsModel typeExamsModel;

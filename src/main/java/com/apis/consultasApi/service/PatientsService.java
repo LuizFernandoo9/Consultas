@@ -1,5 +1,6 @@
 package com.apis.consultasApi.service;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,9 @@ public class PatientsService {
 
     public List<PatientsModel> getPatient(PatientsModel patientsModel){
 
-        if(patientsModel.getName().isEmpty() && patientsModel.getCpf().isEmpty()){
+        if(patientsModel.getName().isEmpty()){
             return this.patientsRepository.findAll().stream().map(patients -> PatientsModel.builder()
+            .id(patients.getId())
             .name(patients.getName())
             .cpf(patients.getCpf())
             .email(patients.getEmail())
@@ -44,6 +46,7 @@ public class PatientsService {
             });
 
             return List.of(PatientsModel.builder()
+            .id(patient.getId())
             .name(patient.getName())
             .cpf(patient.getCpf())
             .email(patient.getEmail())
@@ -51,7 +54,14 @@ public class PatientsService {
             .phone(patient.getPhone())
             .dateOfBirth(patient.getDateOfBirth()).build());
         }
+    }
 
+    public void deletePatient(UUID id){
+        this.patientsRepository.findById(id).orElseThrow(()->{
+            throw new PatientsNotFoundException();
+        });
+
+        this.patientsRepository.deleteById(id);
     }
 
 }

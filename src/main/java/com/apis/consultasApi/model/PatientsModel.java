@@ -1,6 +1,7 @@
 package com.apis.consultasApi.model;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -26,7 +27,7 @@ public class PatientsModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    private UUID id;
 
     @Length(max = 100)
     private String name;
@@ -38,7 +39,7 @@ public class PatientsModel {
 
     private Gender gender;
 
-    @Pattern(regexp = "\\(\\d{2}\\) \\d{4,5}-(4)\\", message = "telefone deve estar no formato (xx)xxxxx-xxxx")
+    @Pattern(regexp = "\\(\\d{2}\\)\\d{5}-\\d{4}", message = "telefone deve estar no formato (xx)xxxxx-xxxx")
     private String phone;
 
     @Email(message = "Deve conter um email válido")

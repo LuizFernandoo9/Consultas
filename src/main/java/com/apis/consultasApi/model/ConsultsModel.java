@@ -21,11 +21,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "Consults")
-public class Consults {
+public class ConsultsModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private UUID protocol;
 
     @ManyToOne()
     @JoinColumn(name = "patientsId", nullable = false)
@@ -38,9 +38,6 @@ public class Consults {
     @ManyToOne()
     @JoinColumn(name = "typeExamsId", nullable = false)
     private TypeExamsModel typeExamsModel;
-
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID protocol;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
