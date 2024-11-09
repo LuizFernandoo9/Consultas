@@ -12,4 +12,6 @@ public interface PatientsRepository extends JpaRepository<PatientsModel, UUID>{
     Optional<PatientsModel> findByNameOrCpf(String name, String category);
 
     Optional<PatientsModel> findByNameAndCpf(String name, String category);
+
+    Optional<PatientsModel> findByEmailAndPhone(String email, String phone);
 }

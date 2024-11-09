@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.apis.consultasApi.dtos.PatientDTO;
 import com.apis.consultasApi.erros.PatientsFoundException;
 import com.apis.consultasApi.erros.PatientsNotFoundException;
 import com.apis.consultasApi.model.PatientsModel;
@@ -23,7 +24,7 @@ public class PatientsService {
             throw new PatientsFoundException();
         });
 
-       var patient =  this.patientsRepository.save(patientsModel);
+       var patient = this.patientsRepository.save(patientsModel);
     
        return patient;
     }
@@ -54,6 +55,24 @@ public class PatientsService {
             .phone(patient.getPhone())
             .dateOfBirth(patient.getDateOfBirth()).build());
         }
+    }
+
+    public PatientDTO editPatient(PatientsModel patientsModel, UUID id){
+        var patients = this.patientsRepository.findById(id).orElseThrow(()->{
+            throw new PatientsNotFoundException();
+        });
+
+        patients.setEmail(patientsModel.getEmail());
+         
+        patients.setPhone(patientsModel.getPhone());
+
+        patientsRepository.save(patients);
+        
+        return PatientDTO.builder()
+        .email(patients.getEmail())
+        .phone(patients.getPhone())
+        .build();
+        
     }
 
     public void deletePatient(UUID id){
