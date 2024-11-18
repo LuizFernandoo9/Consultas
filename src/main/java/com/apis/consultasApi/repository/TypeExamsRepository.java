@@ -9,5 +9,5 @@ import com.apis.consultasApi.model.TypeExamsModel;
 
 public interface TypeExamsRepository extends JpaRepository<TypeExamsModel, UUID>{
 
-    Optional<TypeExamsModel> findByNameTypeExam(String nameTypeExam);
+    Optional<TypeExamsModel> findByName(String name);
 }

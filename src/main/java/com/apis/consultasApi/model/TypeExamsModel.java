@@ -25,7 +25,7 @@ public class TypeExamsModel {
     private UUID id;
 
     @Length(max = 100)
-    private String nameTypeExam;
+    private String name;
 
     private String description;
 
