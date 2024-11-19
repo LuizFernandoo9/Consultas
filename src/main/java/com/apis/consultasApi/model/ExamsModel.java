@@ -26,10 +26,11 @@ public class ExamsModel {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private String nameExam;
+    private String name;
+    private String observation;
 
     @ManyToOne()
-    @JoinColumn(name = "typeExamId", nullable = false)
+    @JoinColumn(name = "typeExamId",  nullable = false)
     private TypeExamsModel typeExamsModel;
 
 }
