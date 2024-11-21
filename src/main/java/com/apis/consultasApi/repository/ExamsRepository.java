@@ -11,4 +11,8 @@ public interface ExamsRepository extends JpaRepository<ExamsModel, UUID>{
     
     Optional<ExamsModel> findByNameAndObservation(String name, String observation);
 
+    Optional<ExamsModel> findByName(String name);
+
+    Optional<ExamsModel> findByNameOrObservation(String name, String observation);
+
 }

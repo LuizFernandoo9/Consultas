@@ -1,9 +1,15 @@
 package com.apis.consultasApi.service;
 
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.apis.consultasApi.dtos.ExamRequestDTO;
+import com.apis.consultasApi.erros.ExamNotFoundException;
 import com.apis.consultasApi.erros.ExamsFoundException;
 import com.apis.consultasApi.erros.TypeExamsNotFoundException;
 import com.apis.consultasApi.model.ExamsModel;
@@ -21,11 +27,10 @@ public class ExamsService {
     private TypeExamsRepository typeExamsRepository;
 
     public ExamRequestDTO createExam(ExamRequestDTO examRequestDTO){
-        System.out.println("o Id será pego a seguir" + examRequestDTO.getTypeExamId());
+        
         var typeExamId = this.typeExamsRepository.findById(examRequestDTO.getTypeExamId()).orElseThrow(()->{
             throw new TypeExamsNotFoundException();
         });
-        System.out.println("Id: "+ typeExamId);
 
         this.examsRepository.findByNameAndObservation(examRequestDTO.getName(), examRequestDTO.getObservation()).ifPresent(exam -> {
             throw new ExamsFoundException();
@@ -43,5 +48,51 @@ public class ExamsService {
         .name(examModel.getName())
         .observation(examModel.getObservation())
         .typeExamId(examModel.getTypeExamsModel().getId()).build();
+    }
+
+    public List<ExamRequestDTO> getExam(ExamsModel examsModel){
+
+        if(examsModel.getName().isEmpty()){
+            return this.examsRepository.findAll().stream().map(exam -> ExamRequestDTO.builder()
+            .name(exam.getName())
+            .observation(exam.getObservation())
+            .typeExamId(exam.getTypeExamsModel().getId()).build()).collect(Collectors.toList());
+
+        }else{
+            var exams = this.examsRepository.findByName(examsModel.getName()).orElseThrow(()->{
+                throw new ExamNotFoundException();
+            });
+
+            return List.of(ExamRequestDTO.builder()
+            .name(exams.getName())
+            .observation(exams.getObservation())
+            .typeExamId(exams.getTypeExamsModel().getId()).build());
+        }
+    }
+
+    public ExamRequestDTO editExam(ExamsModel examsModel, UUID id){
+
+        var idExam = this.examsRepository.findById(id).orElseThrow(()->{
+            throw new ExamNotFoundException();
+        });
+
+        idExam.setName(examsModel.getName());
+        idExam.setObservation(examsModel.getObservation());
+
+        this.examsRepository.save(idExam);
+
+        return ExamRequestDTO.builder()
+        .name(idExam.getName())
+        .observation(idExam.getObservation())
+        .typeExamId(idExam.getTypeExamsModel().getId())
+        .build();
+    }
+
+    public void deleteExam( UUID id){
+        var exam = this.examsRepository.findById(id).orElseThrow(()->{
+            throw new ExamNotFoundException();
+        });
+
+        this.examsRepository.delete(exam);
     }
 }
