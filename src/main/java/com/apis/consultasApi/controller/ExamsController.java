@@ -64,7 +64,7 @@ public class ExamsController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteExam(UUID id){
+    public ResponseEntity<Object> deleteExam(@PathVariable UUID id){
         try {
             this.examsService.deleteExam(id);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body("Exame deletado");

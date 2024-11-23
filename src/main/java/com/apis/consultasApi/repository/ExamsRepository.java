@@ -4,7 +4,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
+import com.apis.consultasApi.dtos.ExamRequestDTO;
 import com.apis.consultasApi.model.ExamsModel;
 
 public interface ExamsRepository extends JpaRepository<ExamsModel, UUID>{
@@ -14,5 +17,7 @@ public interface ExamsRepository extends JpaRepository<ExamsModel, UUID>{
     Optional<ExamsModel> findByName(String name);
 
     Optional<ExamsModel> findByNameOrObservation(String name, String observation);
+
+    Optional<ExamsModel> findByTypeExamsModel_Id(UUID typeExamId);
 
 }

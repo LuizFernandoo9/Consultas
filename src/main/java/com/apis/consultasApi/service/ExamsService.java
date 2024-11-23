@@ -2,7 +2,6 @@ package com.apis.consultasApi.service;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import com.apis.consultasApi.erros.ExamNotFoundException;
 import com.apis.consultasApi.erros.ExamsFoundException;
 import com.apis.consultasApi.erros.TypeExamsNotFoundException;
 import com.apis.consultasApi.model.ExamsModel;
-import com.apis.consultasApi.model.TypeExamsModel;
 import com.apis.consultasApi.repository.ExamsRepository;
 import com.apis.consultasApi.repository.TypeExamsRepository;
 
