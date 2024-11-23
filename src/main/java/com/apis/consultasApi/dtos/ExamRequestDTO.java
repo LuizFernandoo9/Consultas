@@ -1,9 +1,6 @@
 package com.apis.consultasApi.dtos;
 
 import java.util.UUID;
-
-import com.apis.consultasApi.model.TypeExamsModel;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

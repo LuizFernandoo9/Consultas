@@ -1,6 +1,6 @@
 package com.apis.consultasApi.dtos;
 
-import java.util.UUID;
+import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ConsultExamDTO {
+public class ConsultResponseDTO {
 
-    private UUID id;
+    private String patientName;
+    private String examName;
+    private String typeExamName;
+    private LocalDateTime NewConsultAt;
 }

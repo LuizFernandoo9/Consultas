@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
 
 import com.apis.consultasApi.dtos.ConsultPatientsRequestDto;
+import com.apis.consultasApi.dtos.ConsultRequestDTO;
+import com.apis.consultasApi.dtos.ConsultResponseDTO;
 import com.apis.consultasApi.dtos.ExamRequestDTO;
 import com.apis.consultasApi.service.ConsultService;
 
@@ -40,6 +43,17 @@ public class ConsultsController {
         try {
             var getExams = this.consultService.getExams(examRequestDTO);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(getExams);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/")
+    public ResponseEntity<Object> newConsult(@RequestBody ConsultRequestDTO consultRequestDTO){
+        try {
+            var consult = this.consultService.createConsult(consultRequestDTO);
+            return ResponseEntity.status(HttpStatus.OK).body(consult);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());

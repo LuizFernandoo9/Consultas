@@ -1,6 +1,6 @@
 package com.apis.consultasApi.dtos;
 
-import org.hibernate.validator.constraints.Length;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

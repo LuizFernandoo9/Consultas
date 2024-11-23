@@ -4,8 +4,6 @@ import java.time.LocalDate;
 
 import com.apis.consultasApi.enums.Gender;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

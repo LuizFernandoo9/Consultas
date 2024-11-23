@@ -8,13 +8,14 @@ import org.springframework.stereotype.Service;
 
 import com.apis.consultasApi.dtos.ConsultPatientsDTO;
 import com.apis.consultasApi.dtos.ConsultPatientsRequestDto;
+import com.apis.consultasApi.dtos.ConsultResponseDTO;
+import com.apis.consultasApi.dtos.ConsultRequestDTO;
 import com.apis.consultasApi.dtos.ExamRequestDTO;
-import com.apis.consultasApi.dtos.TypeExamsDTO;
+import com.apis.consultasApi.erros.ConsultFoundException;
 import com.apis.consultasApi.erros.ExamNotFoundException;
 import com.apis.consultasApi.erros.PatientsNotFoundException;
 import com.apis.consultasApi.erros.TypeExamsNotFoundException;
 import com.apis.consultasApi.model.ConsultsModel;
-import com.apis.consultasApi.model.TypeExamsModel;
 import com.apis.consultasApi.repository.ConsultRepository;
 import com.apis.consultasApi.repository.ExamsRepository;
 import com.apis.consultasApi.repository.PatientsRepository;
@@ -60,5 +61,36 @@ public class ConsultService {
         .observation(exam.getObservation()).build()).collect(Collectors.toList());
     }
 
+    public ConsultResponseDTO createConsult(ConsultRequestDTO consultRequestDTO){
 
+        this.consultRepository.findByNewConsultAt(consultRequestDTO.getNewConsultAt()).ifPresent(consult -> {
+            throw new ConsultFoundException();
+        });
+
+        var patients = this.patientsRepository.findByNameOrCpf(consultRequestDTO.getPatientName(), consultRequestDTO.getPatientCPF()).orElseThrow(()->{
+            throw new PatientsNotFoundException();
+        });
+
+        var exam = this.examsRepository.findByName(consultRequestDTO.getExamName()).orElseThrow(()->{
+            throw new ExamNotFoundException();
+        }); 
+
+        var typeExam = this.typeExamsRepository.findByName(consultRequestDTO.getTypeExamName()).orElseThrow(()->{
+            throw new TypeExamsNotFoundException();
+        });
+    
+        var consult = ConsultsModel.builder()
+        .newConsultAt(consultRequestDTO.getNewConsultAt())
+        .patientsModel(patients)
+        .examsModel(exam)
+        .typeExamsModel(typeExam).build();
+
+        this.consultRepository.save(consult);
+
+        return ConsultResponseDTO.builder()
+        .patientName(patients.getName())
+        .typeExamName(typeExam.getName())
+        .examName(exam.getName())
+        .NewConsultAt(consultRequestDTO.getNewConsultAt()).build();
+    }
 }
