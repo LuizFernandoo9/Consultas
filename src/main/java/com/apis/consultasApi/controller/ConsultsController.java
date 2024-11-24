@@ -18,6 +18,8 @@ import com.apis.consultasApi.dtos.ConsultResponseDTO;
 import com.apis.consultasApi.dtos.ExamRequestDTO;
 import com.apis.consultasApi.service.ConsultService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
@@ -28,6 +30,8 @@ public class ConsultsController {
     private ConsultService consultService;
 
     @GetMapping("/patient")
+    @Tag(name = "Consultas", description = "Rota de consultas")
+    @Operation(summary = "Seleção de paciente", description = "Rota responsável por selecionar paciente cadastrado, buscando por nome ou cpf")
     public ResponseEntity<Object> getPatient(@Valid @RequestBody ConsultPatientsRequestDto consultPatientsRequestDto){
         try {
             var getPatients = this.consultService.getPatients(consultPatientsRequestDto);
@@ -39,6 +43,8 @@ public class ConsultsController {
     }
 
     @GetMapping("/exams")
+    @Tag(name = "Consultas", description = "Rota de consultas")
+    @Operation(summary = "Seleção de exames", description = "Rota responsável por selecionar o tipo de exame e retornar todos o exames cadastrados nele")
     public ResponseEntity<Object> getExam(@RequestBody ExamRequestDTO examRequestDTO){
         try {
             var getExams = this.consultService.getExams(examRequestDTO);
@@ -50,6 +56,8 @@ public class ConsultsController {
     }
 
     @PostMapping("/")
+    @Tag(name = "Consultas", description = "Rota de consultas")
+    @Operation(summary = "Marcar consulta", description = "Rota responsável por marcar uma consulta, utilizando o paciente, o tipo de exame, o exame escolhido e a data da consulta.")
     public ResponseEntity<Object> newConsult(@RequestBody ConsultRequestDTO consultRequestDTO){
         try {
             var consult = this.consultService.createConsult(consultRequestDTO);

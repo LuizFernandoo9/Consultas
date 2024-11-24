@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.apis.consultasApi.model.TypeExamsModel;
 import com.apis.consultasApi.service.TypeExamsService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
@@ -27,6 +29,8 @@ public class TypeExamsController {
     private TypeExamsService typeExamsService;
 
     @PostMapping("/")
+    @Tag(name = "Tipos de exames", description = "Rota de tipos de exames")
+    @Operation(summary = "Cadastra o tipo de exame", description = "Endpoint responsável por criar um novo tipo de exame")
     public ResponseEntity<Object> newTypeExam(@Valid @RequestBody TypeExamsModel typeExamsModel){
         try {
             var newTypeExam = this.typeExamsService.create(typeExamsModel);
@@ -37,6 +41,8 @@ public class TypeExamsController {
     }
 
     @GetMapping("/")
+    @Tag(name = "Tipos de exames", description = "Rota de tipos de exames")
+    @Operation(summary = "Lista os tipos de exames", description = "Endpoint responsável por listar os tipos de exames cadastrados. Caso utilize o nome para buscar, se cadastrado, irá retornar apenas o tipo de exame")
     public ResponseEntity<Object> getTypeExam(@Valid @RequestBody TypeExamsModel typeExamsModel){
         try {
             var get = this.typeExamsService.getTypeExams(typeExamsModel);
@@ -47,6 +53,8 @@ public class TypeExamsController {
     }
 
     @PutMapping("/{id}")
+    @Tag(name = "Tipos de exames", description = "Rota de tipos de exames")
+    @Operation(summary = "Editar o tipo de exame", description = "Endpoint responsável por atualizar os dados do tipo de exame, como nome e descrição, com base no id")
     public ResponseEntity<Object> editTypeExam(@Valid @RequestBody TypeExamsModel typeExamsModel, @PathVariable UUID id){
         try {
             var edit = this.typeExamsService.putTypeExmas(typeExamsModel, id);
@@ -57,6 +65,8 @@ public class TypeExamsController {
     }
 
     @DeleteMapping("/{id}")
+    @Tag(name = "Tipos de exames", description = "Rota de tipos de exames")
+    @Operation(summary = "Deletar o tipo de exame", description = "Endpoint responsável por deletar o tipo de exame, com base no id")
     public ResponseEntity<Object> deleteTypeExam(@PathVariable UUID id){
         try {
             this.typeExamsService.deleteTypeExams(id);

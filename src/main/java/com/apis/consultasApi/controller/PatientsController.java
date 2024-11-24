@@ -18,6 +18,7 @@ import com.apis.consultasApi.model.PatientsModel;
 import com.apis.consultasApi.service.PatientsService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
@@ -28,6 +29,7 @@ public class PatientsController {
     private PatientsService patientsService;
 
     @PostMapping("/")
+    @Tag(name = "Pacientes", description = "Rota de pacientes")
     @Operation(summary = "Cadastra pacientes", description = "Rota responsável por cadastrar novos pacientes")
     public ResponseEntity<Object> createPatients(@Valid @RequestBody PatientsModel patientsModel){
 
@@ -40,7 +42,8 @@ public class PatientsController {
     }
 
     @GetMapping("/")
-    @Operation(summary = "Acessa os pacientes", description = "Rota responsável por listar, mostrar os pacientes cadastrados")
+    @Tag(name = "Pacientes", description = "Rota de pacientes")
+    @Operation(summary = "Listar os pacientes", description = "Endpoint responsável por listar os pacientes cadastrados. Caso utilize o nome para buscar o paciente, se cadastrado, irá retornar apenas o paciente")
     public ResponseEntity<Object> getPatients(@Valid @RequestBody PatientsModel patientsModel){
         try{
             var listPatients = this.patientsService.getPatient(patientsModel);
@@ -51,7 +54,8 @@ public class PatientsController {
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Atualiza dados", description = "Rota realiza atualização de dados como telefone e email")
+    @Tag(name = "Pacientes", description = "Rota de pacientes")
+    @Operation(summary = "Atualizar dados do paciente", description = "Endpoint realiza atualização de dados, como telefone e email, com base no id")
     public ResponseEntity<Object> putPatients(@Valid @RequestBody PatientsModel patientsModel, @PathVariable UUID id){
         try {
             var patientsEdited = this.patientsService.editPatient(patientsModel, id);
@@ -62,7 +66,8 @@ public class PatientsController {
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Deleta os pacientes", description = "Rota para deletar os pacientes")
+    @Tag(name = "Pacientes", description = "Rota de pacientes")
+    @Operation(summary = "Deleta os pacientes", description = "Endpoint responável por deletar os pacientes cadastrados, com base no id")
     public ResponseEntity<Object> deletePatients(@PathVariable UUID id){
 
         try{

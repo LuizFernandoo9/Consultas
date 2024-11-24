@@ -88,6 +88,7 @@ public class ConsultService {
         this.consultRepository.save(consult);
 
         return ConsultResponseDTO.builder()
+        .protocol(consult.getProtocol())
         .patientName(patients.getName())
         .typeExamName(typeExam.getName())
         .examName(exam.getName())

@@ -19,7 +19,8 @@ import com.apis.consultasApi.dtos.ExamRequestDTO;
 import com.apis.consultasApi.model.ExamsModel;
 import com.apis.consultasApi.service.ExamsService;
 
-
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.var;
 
@@ -31,6 +32,8 @@ public class ExamsController {
     private ExamsService examsService;
 
     @PostMapping("/")
+    @Tag(name = "Exames", description = "Rota de Exames")
+    @Operation(summary = "Cria novos exames", description = "Endpoint responsável por criar novos exames")
     public ResponseEntity<Object> newExam(@Valid @RequestBody ExamRequestDTO examRequestDTO){
         try {
             var exam = this.examsService.createExam(examRequestDTO);
@@ -42,6 +45,8 @@ public class ExamsController {
     }
 
     @GetMapping("/")
+    @Tag(name = "Exames", description = "Rota de Exames")
+    @Operation(summary = "Lista os exames", description = "Endpoint responsável por listar os exames cadastrados. Caso utilize o nome para buscar, se cadastrado, irá retornar apenas o exame")
     public ResponseEntity<Object> getExam(@Valid @RequestBody ExamsModel examsModel){
         try {
             var exam = this.examsService.getExam(examsModel);
@@ -53,6 +58,8 @@ public class ExamsController {
     }
 
     @PutMapping("/{id}")
+    @Tag(name = "Exames", description = "Rota de Exames")
+    @Operation(summary = "Editar exames", description = "Endpoint responsável por atualizar os dados do exame, como nome e observações, com base no id")
     public ResponseEntity<Object> putExam(@Valid @RequestBody ExamsModel examsModel, @PathVariable UUID id){
         try {
             var exam = this.examsService.editExam(examsModel, id);
@@ -64,6 +71,8 @@ public class ExamsController {
     }
 
     @DeleteMapping("/{id}")
+    @Tag(name = "Exames", description = "Rota de Exames")
+    @Operation(summary = "Deletar exames", description = "Endpoint responsável por deletar o exame, com base no id")
     public ResponseEntity<Object> deleteExam(@PathVariable UUID id){
         try {
             this.examsService.deleteExam(id);

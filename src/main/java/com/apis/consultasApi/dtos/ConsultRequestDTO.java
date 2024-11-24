@@ -1,6 +1,7 @@
 package com.apis.consultasApi.dtos;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +14,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ConsultRequestDTO {
 
-    
     private String patientName;
     private String patientCPF;
     private String examName;
