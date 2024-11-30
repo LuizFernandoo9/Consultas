@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.service.annotation.PutExchange;
 
-import com.apis.consultasApi.dtos.ExamRequestDTO;
+import com.apis.consultasApi.dtos.ExamDTO;
 import com.apis.consultasApi.model.ExamsModel;
 import com.apis.consultasApi.service.ExamsService;
 
@@ -34,7 +34,7 @@ public class ExamsController {
     @PostMapping("/")
     @Tag(name = "Exames", description = "Rota de Exames")
     @Operation(summary = "Cria novos exames", description = "Endpoint responsável por criar novos exames")
-    public ResponseEntity<Object> newExam(@Valid @RequestBody ExamRequestDTO examRequestDTO){
+    public ResponseEntity<Object> newExam(@Valid @RequestBody ExamDTO examRequestDTO){
         try {
             var exam = this.examsService.createExam(examRequestDTO);
             return ResponseEntity.status(HttpStatus.OK).body(exam);

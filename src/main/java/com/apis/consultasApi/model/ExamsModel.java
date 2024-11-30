@@ -2,6 +2,7 @@ package com.apis.consultasApi.model;
 
 import java.util.UUID;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,7 +27,10 @@ public class ExamsModel {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Schema(example = "Cirurgia cardíaca")
     private String name;
+    
+    @Schema(example = "Informar histórico de doenças, realizar exames de sangue, urina, eletrocardiograma e raio X")
     private String observation;
 
     @ManyToOne()

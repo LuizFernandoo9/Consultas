@@ -10,7 +10,7 @@ import com.apis.consultasApi.dtos.ConsultPatientsDTO;
 import com.apis.consultasApi.dtos.ConsultPatientsRequestDto;
 import com.apis.consultasApi.dtos.ConsultResponseDTO;
 import com.apis.consultasApi.dtos.ConsultRequestDTO;
-import com.apis.consultasApi.dtos.ExamRequestDTO;
+import com.apis.consultasApi.dtos.ExamDTO;
 import com.apis.consultasApi.erros.ConsultFoundException;
 import com.apis.consultasApi.erros.ExamNotFoundException;
 import com.apis.consultasApi.erros.PatientsNotFoundException;
@@ -49,13 +49,13 @@ public class ConsultService {
        .phone(patients.getPhone()).build();
     }
 
-    public List<ExamRequestDTO> getExams(ExamRequestDTO examRequestDTO){
+    public List<ExamDTO> getExams(ExamDTO examRequestDTO){
 
         var typeExamsId = this.typeExamsRepository.findById(examRequestDTO.getTypeExamId()).orElseThrow(()->{
             throw new TypeExamsNotFoundException();
         });
     
-        return this.examsRepository.findByTypeExamsModel_Id(typeExamsId.getId()).stream().map(exam -> ExamRequestDTO.builder()
+        return this.examsRepository.findByTypeExamsModel_Id(typeExamsId.getId()).stream().map(exam -> ExamDTO.builder()
         .typeExamId(typeExamsId.getId())
         .name(exam.getName())
         .observation(exam.getObservation()).build()).collect(Collectors.toList());

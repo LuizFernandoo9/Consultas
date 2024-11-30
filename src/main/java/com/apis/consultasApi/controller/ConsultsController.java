@@ -15,7 +15,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter
 import com.apis.consultasApi.dtos.ConsultPatientsRequestDto;
 import com.apis.consultasApi.dtos.ConsultRequestDTO;
 import com.apis.consultasApi.dtos.ConsultResponseDTO;
-import com.apis.consultasApi.dtos.ExamRequestDTO;
+import com.apis.consultasApi.dtos.ExamDTO;
 import com.apis.consultasApi.service.ConsultService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -45,7 +45,7 @@ public class ConsultsController {
     @GetMapping("/exams")
     @Tag(name = "Consultas", description = "Rota de consultas")
     @Operation(summary = "Seleção de exames", description = "Rota responsável por selecionar o tipo de exame e retornar todos o exames cadastrados nele")
-    public ResponseEntity<Object> getExam(@RequestBody ExamRequestDTO examRequestDTO){
+    public ResponseEntity<Object> getExam(@RequestBody ExamDTO examRequestDTO){
         try {
             var getExams = this.consultService.getExams(examRequestDTO);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(getExams);
